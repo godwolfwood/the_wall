@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div id="wrapper">
+            <!-- {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>You have successfully logged in as {{message}}!!!</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %} -->
+            <h1>Post a message:</h1>
+            <form action="/post" method="post">
+                <textarea name="post"></textarea>
+                <input type="submit" value="Post a message">
+            </form>
+            
+            {%for post in posts%}
+                <p> {{post["name"]}} - {{post["update_at"]}}</p>
+                <p> {{post["data"]}}</p>
+                {%for message in messages[post["id"]]%}
+                    <p> {{message["name"]}} - {{message["update_at"]}}</p>
+                    <p> {{message["data"]}}</p>
+                {%endfor%}
+                <p>Post a message:</p>
+                <form action="/comment" method="post">
+                    <input type="hidden" name="post_id" value={{post["id"]}} />
+                    <textarea name="comment"></textarea>
+                    <input type="submit" value="Post a comment">
+                </form>
+            {%endfor%}
+        </div>
+    </body> 
+</html>
+
